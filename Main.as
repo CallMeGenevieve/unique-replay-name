@@ -22,8 +22,6 @@ void Main() {
                     for (int i = tostring(countingIndex).get_Length(); i < amountOfDigits; i++) {
                         basicDialogs.String = basicDialogs.String + "0";
                     }
-                    print(basicDialogs.String);
-                    print(countingIndex);
                     basicDialogs.String = basicDialogs.String + tostring(countingIndex);
                     countingIndex += 1;
                 } else {
