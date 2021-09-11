@@ -1,8 +1,10 @@
 [meta]
-name = "Unique Replay Name Plugin"
+name = "Unique Replay Name"
 author = "ZaraStocher"
 category = "Replays"
-version = 0.1
+
+version = "1.0.1"
+siteId = 130
 
 [game]
 min_game_version = "2019-11-19"

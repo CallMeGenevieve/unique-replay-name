@@ -5,7 +5,6 @@ int countingIndex = 0;
 int amountOfDigits = 4;
 string replayName = "";
 bool uniqueStringSet = false;
-CGameCtnApp@ app = null;
 
 void Main() {
 #if MP4
@@ -14,17 +13,24 @@ void Main() {
         yield();
     }
     auto basicDialogs = app.BasicDialogs;
+    
     while (true) {
         if (replaceName && basicDialogs.DialogSaveAs_Path.StartsWith("Replays")) {
             if (string(basicDialogs.String).get_Length() > 0 && !uniqueStringSet) {
                 if (countingMode) {
+                    // This line causes the following line in the openplanet log, but I don't know why. May cause the crashes?
+                    // Assertion failed: '"((uintptr_t)buffer & 0xF) == 0"'
                     basicDialogs.String = replayName;
+
+                    // Adds '0' until the rest of the digits can be filled with the counter
                     for (int i = tostring(countingIndex).get_Length(); i < amountOfDigits; i++) {
                         basicDialogs.String = basicDialogs.String + "0";
                     }
+                    // Adds the counter to the String
                     basicDialogs.String = basicDialogs.String + tostring(countingIndex);
                     countingIndex += 1;
                 } else {
+                    // Adds the timestamp to the replay name 
                     Time::Info timestamp = Time::Parse(Time::get_Stamp());
                     basicDialogs.String = string(basicDialogs.String) + "_" + timestamp.Year + "-" + timestamp.Month + "-" + timestamp.Day + "_" + timestamp.Hour + "-" + timestamp.Minute + "-" + timestamp.Second;
                 }
