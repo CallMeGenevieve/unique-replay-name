@@ -1,3 +1,7 @@
+[![Version](https://img.shields.io/badge/dynamic/json?color=pink&label=Version&query=version&url=https%3A%2F%2Fopenplanet.nl%2Fapi%2Ffile%2F130)](https://openplanet.nl/files/130)
+[![Total Downloads](https://img.shields.io/badge/dynamic/json?color=green&label=Downloads&query=downloads&url=https%3A%2F%2Fopenplanet.nl%2Fapi%2Ffile%2F130)](https://openplanet.nl/files/130)
+![Tags 1](https://img.shields.io/badge/dynamic/json?color=blue&label=Game&query=tags%5B0%5D.name&url=https%3A%2F%2Fopenplanet.nl%2Fapi%2Ffile%2F130)
+![Tags 2](https://img.shields.io/badge/dynamic/json?color=green&label=Type&query=tags%5B1%5D.name&url=https%3A%2F%2Fopenplanet.nl%2Fapi%2Ffile%2F130)
 # Before you start
 Set your preferences via `Scripts -> Unique Replay Name`. In this window, you can toggle replay name replacements, and set your preferred replacement mode. If counting mode is activated, additional options appear.
 
