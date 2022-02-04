@@ -1,8 +1,3 @@
-bool windowVisible = false;
-bool replaceName = true;
-int countingIndex = 0;
-int amountOfDigits = 4;
-string replayName = "";
 bool uniqueStringSet = false;
 
 void Main() {
@@ -14,22 +9,20 @@ void Main() {
     auto basicDialogs = app.BasicDialogs;
     
     while (true) {
-        if (replaceName && basicDialogs.DialogSaveAs_Path.StartsWith("Replays")) {
+        if (Setting_Enabled && basicDialogs.DialogSaveAs_Path.StartsWith("Replays")) {
             if (string(basicDialogs.String).get_Length() > 0 && !uniqueStringSet) {
-                print(replayName.get_Length() + amountOfDigits);
-                if (replayName.get_Length() + amountOfDigits > 10) {
-                    replayName = replayName.SubStr(0, 10 - amountOfDigits);
-                    print(replayName);
-                }
-                basicDialogs.String = replayName;
+                basicDialogs.String = Setting_ReplayName;
 
                 // Adds '0' until the rest of the digits can be filled with the counter
-                for (int i = tostring(countingIndex).get_Length(); i < amountOfDigits; i++) {
+                for (int i = tostring(Setting_CountingIndex).get_Length(); i < Setting_AmountOfDigits; i++) {
                     basicDialogs.String = basicDialogs.String + "0";
                 }
                 // Adds the counter to the String
-                basicDialogs.String = basicDialogs.String + tostring(countingIndex);
-                countingIndex += 1;
+                basicDialogs.String = basicDialogs.String + tostring(Setting_CountingIndex);
+                Setting_CountingIndex += 1;
+                if (Setting_CountingIndex >= 10 ** Setting_AmountOfDigits) {
+                    Setting_CountingIndex = 0;
+                }
                 uniqueStringSet = true;
             } else if (uniqueStringSet && basicDialogs.DialogSaveAs_Files.get_Length() == 0) {
                 uniqueStringSet = false;
@@ -41,33 +34,15 @@ void Main() {
 #endif
 }
 
-void RenderMenu() {
-    if (UI::MenuItem("Unique Replay Name")) {
-        windowVisible = !windowVisible;
+void OnSettingsChanged()
+{
+	if (Setting_ReplayName.get_Length() + Setting_AmountOfDigits > 10) {
+        Setting_ReplayName = Setting_ReplayName.SubStr(0, 10 - Setting_AmountOfDigits);
     }
-}
-
-void RenderInterface() {
-    if (windowVisible) {
-        UI::SetNextWindowSize(500, 200);
-        UI::Begin("Replay Name Settings", windowVisible);
-        replaceName = UI::Checkbox("Enable", replaceName);
-
-        UI::Separator();
-        replayName = UI::InputText("Replay name", replayName);
-        amountOfDigits = UI::InputInt("Max amount of digits", amountOfDigits);
-        countingIndex = UI::InputInt("Counting index", countingIndex);
-            
-        if (amountOfDigits < 1) {
-            amountOfDigits = 1;
-        }
-        if (countingIndex < 0) {
-            countingIndex = 0;
-        } else {
-            while (tostring(countingIndex).get_Length() > amountOfDigits) {
-                countingIndex = countingIndex / 10;
-            }
-        }
-        UI::End();
+    if (Setting_CountingIndex < 0) {
+        Setting_CountingIndex = 0;
+    }
+    if (Setting_CountingIndex >= 10 ** Setting_AmountOfDigits) {
+        Setting_CountingIndex = 10 ** Setting_AmountOfDigits - 1;
     }
 }
