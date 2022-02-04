@@ -18,8 +18,11 @@ void Main() {
         if (replaceName && basicDialogs.DialogSaveAs_Path.StartsWith("Replays")) {
             if (string(basicDialogs.String).get_Length() > 0 && !uniqueStringSet) {
                 if (countingMode) {
-                    // This line causes the following line in the openplanet log, but I don't know why. May cause the crashes?
-                    // Assertion failed: '"((uintptr_t)buffer & 0xF) == 0"'
+                    print(replayName.get_Length() + amountOfDigits);
+                    if (replayName.get_Length() + amountOfDigits > 10) {
+                        replayName = replayName.SubStr(0, 10 - amountOfDigits);
+                        print(replayName);
+                    }
                     basicDialogs.String = replayName;
 
                     // Adds '0' until the rest of the digits can be filled with the counter
@@ -63,6 +66,7 @@ void RenderInterface() {
             replayName = UI::InputText("Replay name", replayName);
             amountOfDigits = UI::InputInt("Max amount of digits", amountOfDigits);
             countingIndex = UI::InputInt("Counting index", countingIndex);
+            
             if (amountOfDigits < 1) {
                 amountOfDigits = 1;
             }
